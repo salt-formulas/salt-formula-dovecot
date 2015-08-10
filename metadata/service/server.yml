@@ -1,0 +1,26 @@
+applications:
+  - dovecot
+parameters:
+  dovecot:
+    server:
+      enabled: true
+      password_scheme: PLAIN-MD5
+      debug: false
+      verbose: true
+      nfs: true
+      mailbox_base: /srv/mail
+      user:
+        name: vmail
+        group: vmail
+        uid: 125
+        gid: 125
+        home: ${dovecot:server:mailbox_base}
+      mysql:
+        user: mailserver
+        database: mailserver
+        password: ${_param:mysql_mailserver_password}
+        host: 127.0.0.1
+      ssl:
+        enabled: true
+        key_file: /etc/ssl/private/ssl-cert-snakeoil.key
+        cert_file: /etc/ssl/certs/ssl-cert-snakeoil.pem
