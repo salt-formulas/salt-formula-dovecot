@@ -1,10 +1,10 @@
 Format: http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
 Upstream-Name: salt-formula-dovecot
 Upstream-Contact: Filip Pytloun <filip.pytloun@tcpcloud.eu>
-Source: https://github.com/tcpcloud/salt-dovecot-formula
+Source: https://github.com/tcpcloud/salt-formula-dovecot
 
 Files: *
-Copyright: 2014-2015 tcp cloud
+Copyright: 2014-2015 tcp cloud a. s.
 License: Apache-2.0
   Copyright (C) 2014-2015 tcp cloud
   .

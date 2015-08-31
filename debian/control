@@ -5,8 +5,8 @@ Priority: optional
 Build-Depends: debhelper (>= 9)
 Standards-Version: 3.9.6
 Homepage: http://www.tcpcloud.eu
-Vcs-Browser: https://github.com/tcpcloud/salt-dovecot-formula
-Vcs-Git: https://github.com/tcpcloud/salt-dovecot-formula.git
+Vcs-Browser: https://github.com/tcpcloud/salt-formula-dovecot
+Vcs-Git: https://github.com/tcpcloud/salt-formula-dovecot.git
 
 Package: salt-formula-dovecot
 Architecture: all
