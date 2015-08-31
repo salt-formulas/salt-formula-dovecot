@@ -1,0 +1,2 @@
+dovecot/*             /usr/share/salt-formulas/env/dovecot/
+metadata/service/*      /usr/share/salt-formulas/reclass/service/dovecot/
