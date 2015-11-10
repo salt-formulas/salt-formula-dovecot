@@ -75,13 +75,21 @@ dovecot_service:
 
 {%- endif %}
 
+dovecot_sieve_dir:
+  file.directory:
+  - name: /var/lib/dovecot/sieve
+  - user: dovecot
+  - group: dovecot
+  - require:
+    - pkg: dovecot_packages
+
 dovecot_default_sieve:
   file.managed:
-  - name: /etc/dovecot/default.sieve
+  - name: /var/lib/dovecot/sieve/default.sieve
   - source: salt://dovecot/files/default.sieve
   - template: jinja
   - require:
-    - pkg: dovecot_packages
+    - file: dovecot_sieve_dir
   - watch_in:
     - service: dovecot_service
 

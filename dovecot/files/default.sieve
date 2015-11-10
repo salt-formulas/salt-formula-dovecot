@@ -4,4 +4,5 @@ if header :contains "X-Spam-Level" "**********" {
   stop;
 } elsif header :contains "X-Spam-Flag" "YES" {
   fileinto "Spam";
+  stop;
 }
