@@ -78,8 +78,6 @@ dovecot_service:
 dovecot_sieve_dir:
   file.directory:
   - name: /var/lib/dovecot/sieve
-  - user: dovecot
-  - group: dovecot
   - require:
     - pkg: dovecot_packages
 
@@ -90,7 +88,11 @@ dovecot_default_sieve:
   - template: jinja
   - require:
     - file: dovecot_sieve_dir
-  - watch_in:
-    - service: dovecot_service
+
+dovecot_default_sieve_compile:
+  cmd.wait:
+  - name: sievec /var/lib/dovecot/sieve/default.sieve
+  - watch:
+    - file: dovecot_default_sieve
 
 {%- endif %}
