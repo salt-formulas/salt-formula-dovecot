@@ -36,7 +36,7 @@ dovecot_packages:
 
 dovecot_service:
   service.running:
-    - name: {{ server.service }}
+    - name: {{ server.service_name }}
     - require:
       - file: dovecot_config
 

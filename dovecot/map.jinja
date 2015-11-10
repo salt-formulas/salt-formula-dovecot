@@ -1,6 +1,6 @@
 {% set server = salt['grains.filter_by']({
     'Debian': {
         'pkgs': ['dovecot-mysql', 'dovecot-imapd', 'dovecot-pop3d', 'dovecot-sieve', 'dovecot-lmtpd', 'dovecot-managesieved'],
-        'service': 'dovecot',
+        'service_name': 'dovecot',
     },
 }, merge=salt['pillar.get']('dovecot:server')) %}
