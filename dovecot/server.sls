@@ -40,4 +40,38 @@ dovecot_service:
     - require:
       - file: dovecot_config
 
+{%- if server.ssl.get('enabled', False) %}
+
+/etc/dovecot/ssl:
+  file.directory:
+  - user: root
+  - group: dovecot
+  - mode: 750
+  - require:
+    - pkg: dovecot_packages
+
+/etc/dovecot/ssl/ssl_cert.crt:
+  file.managed:
+  - source: salt://dovecot/files/ssl_cert_all.crt
+  - user: root
+  - group: dovecot
+  - mode: 640
+  - require:
+    - file: /etc/dovecot/ssl
+  - watch_in:
+    - service: dovecot_service
+
+/etc/dovecot/ssl/ssl_key.key:
+  file.managed:
+  - contents_pillar: dovecot:server:ssl:key
+  - user: root
+  - group: dovecot
+  - mode: 640
+  - require:
+    - file: /etc/dovecot/ssl
+  - watch_in:
+    - service: dovecot_service
+
+{%- endif %}
+
 {%- endif %}
