@@ -75,4 +75,14 @@ dovecot_service:
 
 {%- endif %}
 
+dovecot_default_sieve:
+  file.managed:
+  - name: /etc/dovecot/default.sieve
+  - source: salt://dovecot/files/default.sieve
+  - template: jinja
+  - require:
+    - pkg: dovecot_packages
+  - watch_in:
+    - service: dovecot_service
+
 {%- endif %}

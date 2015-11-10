@@ -14,6 +14,8 @@ parameters:
         lmtp:
           enabled: true
           process_min_avail: 5
+        sieve:
+          enabled: true
       user:
         name: vmail
         group: vmail
