@@ -53,6 +53,7 @@ dovecot_service:
 /etc/dovecot/ssl/ssl_cert.crt:
   file.managed:
   - source: salt://dovecot/files/ssl_cert_all.crt
+  - template: jinja
   - user: root
   - group: dovecot
   - mode: 640
