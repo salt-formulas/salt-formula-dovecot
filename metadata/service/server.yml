@@ -4,11 +4,16 @@ parameters:
   dovecot:
     server:
       enabled: true
+      admin: postmaster@${linux:system:domain}
       password_scheme: PLAIN-MD5
       debug: false
       verbose: true
       nfs: true
       mailbox_base: /srv/mail
+      service:
+        lmtp:
+          enabled: true
+          process_min_avail: 5
       user:
         name: vmail
         group: vmail
