@@ -78,6 +78,8 @@ dovecot_service:
 dovecot_sieve_dir:
   file.directory:
   - name: /var/lib/dovecot/sieve
+  - group: vmail
+  - mode: 775
   - require:
     - pkg: dovecot_packages
 
