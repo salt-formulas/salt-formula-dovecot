@@ -97,4 +97,20 @@ dovecot_default_sieve_compile:
   - watch:
     - file: dovecot_default_sieve
 
+{%- if server.expunge.enabled %}
+
+cron_expunge_junk:
+  cron.present:
+    - name: doveadm expunge -A mailbox Junk savedbefore {{ server.expunge.junk_days }}d
+    - hour: 1
+    - minute: 15
+
+cron_expunge_trash:
+  cron.present:
+    - name: doveadm expunge -A mailbox Trash savedbefore {{ server.expunge.trash_days }}d
+    - hour: 2
+    - minute: 15
+
+{%- endif %}
+
 {%- endif %}

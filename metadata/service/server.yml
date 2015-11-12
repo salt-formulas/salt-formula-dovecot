@@ -10,6 +10,10 @@ parameters:
       verbose: true
       nfs: true
       mailbox_base: /srv/mail
+      expunge:
+        enabled: true
+        junk_days: 60
+        trash_days: 90
       service:
         lmtp:
           enabled: true
