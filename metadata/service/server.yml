@@ -10,6 +10,9 @@ parameters:
       verbose: true
       nfs: true
       mailbox_base: /srv/mail
+      index:
+        enabled: true
+        path: /var/lib/dovecot/index
       expunge:
         enabled: true
         junk_days: 60

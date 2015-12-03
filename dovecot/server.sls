@@ -40,6 +40,21 @@ dovecot_service:
     - require:
       - file: dovecot_config
 
+{%- if server.index.get('enabled', True) %}
+
+dovecot_index_dir:
+  file.directory:
+    - name: {{ server.index.path }}
+    - owner: vmail
+    - group: vmail
+    - mode: 0770
+    - require:
+      - pkg: dovecot_packages
+    - required_in:
+      - service: dovecot_service
+
+{%- endif %}
+
 {%- if server.ssl.get('enabled', False) %}
 
 /etc/dovecot/ssl:
