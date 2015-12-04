@@ -1,0 +1,9 @@
+doc:
+  name: Dovecot
+  description: Dovecot is an open source IMAP and POP3 email server for Linux/UNIX-like systems, written with security primarily in mind.
+  role:
+  {%- if pillar.dovecot.server is defined %}
+    server:
+      name: server
+      param: {}
+  {%- endif %}
