@@ -18,11 +18,21 @@ parameters:
         junk_days: 60
         trash_days: 90
       service:
+        imap:
+          enabled: true
+          vsz_limit: 64
+        pop3:
+          enabled: true
+          vsz_limit: 64
         lmtp:
           enabled: true
           process_min_avail: 5
         sieve:
           enabled: true
+          vsz_limit: 64
+        director:
+          enabled: false
+          port: 9090
       user:
         name: vmail
         group: vmail
