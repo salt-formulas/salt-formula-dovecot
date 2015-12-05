@@ -87,6 +87,46 @@ Server
                 - ${linux:system:name}.${linux:system:domain}
                 - ${linux:system:name}
 
+Director
+~~~~~~~~
+
+Dovecot Director is used to ensure connection affinity to specific backends.
+This seems to be a must-have for shared storage such as NFS, GlusterFS, etc.
+otherwise you are going to meet split-brains, corrupted files and other
+issues.
+
+Unfortunately director for LMTP can't be used when director and backend
+servers are the same.
+
+See http://wiki2.dovecot.org/Director for more informations.
+
+.. code-block:: yaml
+
+    dovecot:
+      server:
+        admin: postmaster@${_param:postfix_origin}
+        # GlusterFS storage is used
+        nfs: true
+        service:
+          director:
+            enabled: true
+            port: 9090
+            backends:
+              - ${_param:cluster_node01_address}
+              - ${_param:cluster_node02_address}
+            directors:
+              - ${_param:cluster_node01_address}
+              - ${_param:cluster_node02_address}
+          lmtp:
+            inet_enabled: true
+            port: 24
+    postfix:
+      server:
+        dovecot_lmtp:
+          enabled: true
+          type: inet
+          address: "localhost:24"
+
 Example pillar
 ==============
 

@@ -27,6 +27,9 @@ parameters:
         lmtp:
           enabled: true
           process_min_avail: 5
+          # Enable if you wish to use director for LMTP
+          inet_enabled: false
+          port: 24
         sieve:
           enabled: true
           vsz_limit: 64
