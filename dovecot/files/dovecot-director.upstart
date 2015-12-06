@@ -1,0 +1,22 @@
+# dovecot - director server
+#
+# Dovecot is a mail server whose major goals are security and extreme reliability.
+
+description "dovecot - director"
+
+start on (dovecot
+          and runlevel [2345])
+stop on runlevel [!2345]
+
+respawn
+
+pre-start script
+    test -x /usr/sbin/dovecot || { stop ; exit 0; }
+    test -r /etc/dovecot/dovecot-director.conf || { stop ; exit 0; }
+    status dovecot | grep start/running >/dev/null || { stop ; exit 1; }
+end script
+
+script
+    test -x /usr/sbin/ntp-wait && ntp-wait -n 2 || true
+    exec /usr/sbin/dovecot -F -c /etc/dovecot/dovecot-director.conf
+end script
