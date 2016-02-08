@@ -87,6 +87,39 @@ Server
                 - ${linux:system:name}.${linux:system:domain}
                 - ${linux:system:name}
 
+LDAP and GSSAPI
+~~~~~~~~~~~~~~~
+
+.. code-block:: yaml
+
+    parameters:
+      dovecot:
+        server:
+          gssapi:
+            host: imap01.example.com
+            keytab: /etc/dovecot/krb5.keytab
+            realms:
+              - example.com
+            default_realm: example.com
+
+          userdb:
+            driver: ldap
+          passdb:
+            driver: ldap
+          ldap:
+            servers:
+              - ldaps://idm01.example.com
+              - ldaps://idm02.example.com
+            basedn: dc=example,dc=com
+            bind:
+              dn: uid=dovecot,cn=users,cn=accounts,dc=example,dc=com
+              password: password
+            # Auth users by binding as them
+            auth_bind:
+              enabled: true
+              userdn: "mail=%u,cn=users,cn=accounts,dc=example,dc=com"
+            user_filter: "(&(objectClass=posixAccount)(mail=%u))"
+
 Director
 ~~~~~~~~
 

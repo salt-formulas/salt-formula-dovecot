@@ -1,5 +1,6 @@
 {% from "dovecot/map.jinja" import server with context %}
 
+{%- if server.get('passdb', {}).get('driver', 'mysql') == 'mysql' %}
 dovecot_sql_config:
   file.managed:
   - name: /etc/dovecot/dovecot-sql.conf
@@ -12,6 +13,35 @@ dovecot_sql_config:
     - pkg: dovecot_packages
   - watch_in:
     - service: dovecot_service
+{%- elif server.get('passdb', {}).get('driver', 'mysql') == 'ldap' %}
+dovecot_ldap_config:
+  file.managed:
+  - name: /etc/dovecot/dovecot-ldap.conf
+  - source: salt://dovecot/files/dovecot-ldap.conf
+  - mode: 640
+  - user: root
+  - group: dovecot
+  - template: jinja
+  - require:
+    - pkg: dovecot_packages
+  - watch_in:
+    - service: dovecot_service
+{%- endif %}
+
+{%- if server.get('userdb', {}).get('driver', 'mysql') == 'ldap' %}
+dovecot_ldap_userdb_config:
+  file.managed:
+  - name: /etc/dovecot/dovecot-ldap-userdb.conf
+  - source: salt://dovecot/files/dovecot-ldap.conf
+  - mode: 640
+  - user: root
+  - group: dovecot
+  - template: jinja
+  - require:
+    - pkg: dovecot_packages
+  - watch_in:
+    - service: dovecot_service
+{%- endif %}
 
 dovecot_packages:
   pkg.installed:
