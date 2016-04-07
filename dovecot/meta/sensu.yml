@@ -1,7 +1,7 @@
 {%- from "dovecot/map.jinja" import server with context %}
 check:
   {%- if server.service.imap.enabled %}
-  remote_imap_server_{{ grains['fqdn'] }}:
+  remote_imap_server_{{ server.myorigin }}:
     command: "PATH=$PATH:/etc/sensu/plugins check_imap -host {{ server.myorigin }}{% if server.get('ssl', {}).get('enabled', False) %} -ssl on{% endif %} -w 0.1 -c 1"
     interval: 60
     occurrences: 1
