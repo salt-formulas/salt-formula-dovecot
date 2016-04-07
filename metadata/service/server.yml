@@ -4,6 +4,7 @@ parameters:
   dovecot:
     server:
       enabled: true
+      myorigin: ${linux:system:name}.${linux:system:domain}
       admin: postmaster@${linux:system:domain}
       password_scheme: PLAIN-MD5
       debug: false
