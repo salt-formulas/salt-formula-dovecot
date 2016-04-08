@@ -2,7 +2,7 @@
 check:
   {%- if server.service.imap.enabled %}
   remote_imap_server_{{ server.myorigin }}:
-    command: "PATH=$PATH:/etc/sensu/plugins check_imap -host {{ server.myorigin }}{% if server.get('ssl', {}).get('enabled', False) %} -ssl on{% endif %} -w 0.1 -c 1"
+    command: "PATH=$PATH:/etc/sensu/plugins check_imap -host {{ server.myorigin }}{% if server.get('ssl', {}).get('enabled', False) %} -ssl on{% endif %} -w 1.2 -c 2"
     interval: 60
     occurrences: 1
     subscribers:
