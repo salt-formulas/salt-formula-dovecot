@@ -1,0 +1,28 @@
+{%- from "dovecot/map.jinja" import server with context %}
+iptables:
+  rules:
+  {%- if server.service.imap.enabled %}
+    - destination_port: 143
+      protocol: tcp
+      jump: ACCEPT
+  {%- if server.ssl.get('enabled', False) %}
+    - destination_port: 993
+      protocol: tcp
+      jump: ACCEPT
+  {%- endif %}
+  {%- endif %}
+  {%- if server.service.pop3.enabled %}
+    - destination_port: 110
+      protocol: tcp
+      jump: ACCEPT
+  {%- if server.ssl.get('enabled', False) %}
+    - destination_port: 995
+      protocol: tcp
+      jump: ACCEPT
+  {%- endif %}
+  {%- endif %}
+  {%- if server.service.sieve.enabled %}
+    - destination_port: 4190
+      protocol: tcp
+      jump: ACCEPT
+  {%- endif %}
