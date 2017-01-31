@@ -51,6 +51,7 @@ dovecot_packages:
 
 {%- if server.ssl.get('enabled', False) %}
 
+{%- if server.ssl.key is defined %}
 /etc/dovecot/ssl:
   file.directory:
   - user: root
@@ -81,5 +82,6 @@ dovecot_packages:
     - file: /etc/dovecot/ssl
   - watch_in:
     - service: dovecot_service
+{%- endif %}
 
 {%- endif %}
