@@ -18,8 +18,12 @@ dovecot_config:
   - template: jinja
   - require:
     - pkg: dovecot_packages
+  {%- if not grains.get('noservices', False)%}
   - watch_in:
     - service: dovecot_service
+  {%- endif %}
+
+{%- if not grains.get('noservices', False)%}
 
 dovecot_service:
   service.running:
@@ -37,8 +41,10 @@ dovecot_index_dir:
     - mode: 0770
     - require:
       - pkg: dovecot_packages
+    {%- if not grains.get('noservices', False)%}
     - required_in:
       - service: dovecot_service
+    {%- endif %}
 
 {%- endif %}
 
@@ -64,6 +70,10 @@ dovecot_default_sieve_compile:
   - watch:
     - file: dovecot_default_sieve
 
+{%- endif %}
+
+{%- if grains.get('virtual_subtype', None) not in ['Docker', 'LXC'] %}
+
 {%- if server.expunge.enabled %}
 
 cron_expunge_junk:
@@ -77,6 +87,8 @@ cron_expunge_trash:
     - name: doveadm expunge -A mailbox Trash savedbefore {{ server.expunge.trash_days }}d
     - hour: 2
     - minute: random
+
+{%- endif %}
 
 {%- endif %}
 
