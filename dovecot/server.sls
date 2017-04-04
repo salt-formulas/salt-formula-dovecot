@@ -18,8 +18,12 @@ dovecot_config:
   - template: jinja
   - require:
     - pkg: dovecot_packages
+  {%- if not grains.get('noservices', False)%}
   - watch_in:
     - service: dovecot_service
+  {%- endif %}
+
+{%- if not grains.get('noservices', False)%}
 
 dovecot_service:
   service.running:
@@ -37,8 +41,10 @@ dovecot_index_dir:
     - mode: 0770
     - require:
       - pkg: dovecot_packages
+    {%- if not grains.get('noservices', False)%}
     - required_in:
       - service: dovecot_service
+    {%- endif %}
 
 {%- endif %}
 
@@ -63,6 +69,8 @@ dovecot_default_sieve_compile:
   - name: sievec /var/lib/dovecot/sieve/default.sieve
   - watch:
     - file: dovecot_default_sieve
+
+{%- endif %}
 
 {%- if server.expunge.enabled %}
 
