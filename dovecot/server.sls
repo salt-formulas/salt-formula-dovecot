@@ -72,8 +72,6 @@ dovecot_default_sieve_compile:
 
 {%- endif %}
 
-{%- if grains.get('virtual_subtype', None) not in ['Docker', 'LXC'] %}
-
 {%- if server.expunge.enabled %}
 
 cron_expunge_junk:
@@ -87,8 +85,6 @@ cron_expunge_trash:
     - name: doveadm expunge -A mailbox Trash savedbefore {{ server.expunge.trash_days }}d
     - hour: 2
     - minute: random
-
-{%- endif %}
 
 {%- endif %}
 
