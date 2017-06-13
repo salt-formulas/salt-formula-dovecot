@@ -18,16 +18,15 @@ dovecot_config:
   - template: jinja
   - require:
     - pkg: dovecot_packages
-  {%- if not grains.get('noservices', False)%}
   - watch_in:
     - service: dovecot_service
-  {%- endif %}
-
-{%- if not grains.get('noservices', False)%}
 
 dovecot_service:
   service.running:
     - name: {{ server.service_name }}
+    {%- if grains.get('noservices') %}
+    - onlyif: /bin/false
+    {%- endif %}
     - require:
       - file: dovecot_config
 
@@ -37,21 +36,21 @@ dovecot_index_dir:
   file.directory:
     - name: {{ server.index.path }}
     - owner: vmail
-    - group: vmail
+    - optional_groups: vmail
     - mode: 0770
+    {%- if grains.get('noservices') %}
+    - onlyif: /bin/false
+    {%- endif %}
     - require:
       - pkg: dovecot_packages
-    {%- if not grains.get('noservices', False)%}
     - required_in:
       - service: dovecot_service
-    {%- endif %}
-
-{%- endif %}
 
 dovecot_sieve_dir:
   file.directory:
   - name: /var/lib/dovecot/sieve
-  - group: vmail
+  - optional_groups: vmail
+  - makedirs: True
   - mode: 775
   - require:
     - pkg: dovecot_packages

@@ -11,10 +11,9 @@ dovecot_sql_config:
   - template: jinja
   - require:
     - pkg: dovecot_packages
-  {%- if not grains.get('noservices', False)%}
   - watch_in:
     - service: dovecot_service
-  {%- endif %}
+
 {%- elif server.get('passdb', {}).get('driver', 'mysql') == 'ldap' %}
 dovecot_ldap_config:
   file.managed:
@@ -26,10 +25,8 @@ dovecot_ldap_config:
   - template: jinja
   - require:
     - pkg: dovecot_packages
-  {%- if not grains.get('noservices', False)%}
   - watch_in:
     - service: dovecot_service
-  {%- endif %}
 {%- endif %}
 
 {%- if server.get('userdb', {}).get('driver', 'mysql') == 'ldap' %}
@@ -43,19 +40,15 @@ dovecot_ldap_userdb_config:
   - template: jinja
   - require:
     - pkg: dovecot_packages
-  {%- if not grains.get('noservices', False)%}
   - watch_in:
     - service: dovecot_service
-  {%- endif %}
 {%- endif %}
 
 dovecot_packages:
   pkg.installed:
     - names: {{ server.pkgs }}
-    {%- if not grains.get('noservices', False)%}
     - watch_in:
       - service: dovecot_service
-    {%- endif %}
 
 {%- if server.ssl.get('enabled', False) %}
 
@@ -77,10 +70,8 @@ dovecot_packages:
   - mode: 640
   - require:
     - file: /etc/dovecot/ssl
-  {%- if not grains.get('noservices', False)%}
   - watch_in:
     - service: dovecot_service
-  {%- endif %}
 
 /etc/dovecot/ssl/ssl_key.key:
   file.managed:
@@ -90,10 +81,8 @@ dovecot_packages:
   - mode: 640
   - require:
     - file: /etc/dovecot/ssl
-  {%- if not grains.get('noservices', False)%}
   - watch_in:
     - service: dovecot_service
-  {%- endif %}
 {%- endif %}
 
 {%- endif %}
