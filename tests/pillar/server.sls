@@ -7,6 +7,7 @@ dovecot:
     verbose: true
     nfs: true
     mailbox_base: /srv/mail
+    myorigin: host
     index:
       enabled: true
       path: /var/lib/dovecot/index
